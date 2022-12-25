@@ -1,26 +1,30 @@
 
 require('dotenv').config()
 const express= require('express')
+const cors = require('cors')
+
 const { MongoClient } = require("mongodb");
-const userRouter = require("./routes/userrout.js");
+
+const userRouter = require("./routes/userrout");
+
 const car = require('./model/car');
 const user = require('./model/user')
+const router = require('./routes/gavno')
 
 const PORT = process.env.PORT||3000
 const app=express()
 const url="mongodb+srv://bajenob:<Savelstan123>@cluster0.hpu47xh.mongodb.net/test"
 const client = new MongoClient(url);
+
+app.use(cors())
 app.use(express.json());
-app.use(userRouter);
+app.use('/api',router);
     
 
 
 
 
-app.get('/',function(res,req){
-    
-    console.log("On server!");
-})
+
 
 async function run() {
   try {
@@ -39,9 +43,7 @@ async function run() {
 
 
 
-app.listen(PORT,function(){
-    console.log("Server starts on 3000 PORT");
-})
+
 
 const start = async () => {
   try {
