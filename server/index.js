@@ -3,6 +3,9 @@ require('dotenv').config()
 const express= require('express')
 const { MongoClient } = require("mongodb");
 const userRouter = require("./routes/userrout.js");
+const car = require('./model/car');
+const user = require('./model/user')
+
 const PORT = process.env.PORT||3000
 const app=express()
 const url="mongodb+srv://bajenob:<Savelstan123>@cluster0.hpu47xh.mongodb.net/test"
@@ -34,12 +37,19 @@ async function run() {
   }
 }
 
-app.use(run);
 
 
 app.listen(PORT,function(){
     console.log("Server starts on 3000 PORT");
 })
 
-
+const start = async () => {
+  try {
+      await run()
+      app.listen(PORT, () => console.log(`Server starter on ${PORT} port`))
+  } catch (e) {
+      console.log(e)
+  }
+}
+start()
 
