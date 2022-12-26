@@ -28,14 +28,10 @@ function LoginApp() {
           password: document.getElementById("password-log").value,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if(data.isLogin){
-            history.push("/");
-            history.go();
-          }
-          console.log(data);
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
     }
     return (
       <div className="page" class="container">

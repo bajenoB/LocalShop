@@ -4,30 +4,7 @@ const express = require("express");
 
 const { check, validationResult } = require("express-validator");
 
-const validation = [
-  check("name")
-    .notEmpty()
-    .withMessage("Имя не может быть пусто!")
-    .isLength({
-      min: 2,
-      max: 30,
-    })
-    .withMessage("Ошибочная длинна"),
 
-  check("image").notEmpty().withMessage("Картинка не может быть пустой"),
-
-  check("price")
-    .notEmpty()
-    .withMessage("Цена не может быть пустой")
-    .isInt({ min: 0 })
-    .withMessage("Цена должна быть больше 0"),
-
-  check("year")
-    .notEmpty()
-    .withMessage("Год не может быть пуст")
-    .isInt({ min: 1900, max: 2023 })
-    .withMessage("Год должен быть между 1900 и 2023!"),
-];
 async function CarRouter(app){
 app.post('/api/addcar',async(req,res)=>{
 
@@ -38,11 +15,11 @@ app.post('/api/addcar',async(req,res)=>{
      let country=req.body.country;
      let description=req.body.description;
      let fuel=req.body.fuel;
-     let Brand=req.body.Brand;
+     let brand=req.body.brand;
      let year=req.body.year;
 
     const car=new CarModel({
-        Brand:Brand,
+        brand:brand,
         price:price,
         name:name,
         country:country,

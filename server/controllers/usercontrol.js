@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../model/user')
 
-const generateToken = (id, login, root) => {
+const generateToken = (id, username, root) => {
     const payload = {
         id,
-        login,
+        username,
         root,
     }
 
@@ -21,8 +21,8 @@ class UserController {
                 res.status(400).json({ message: "Registration errors found", errors })
             }
 
-            const { login, password } = req.body
-            const usercheck = await User.findOne({ login })
+            const { username, password,email } = req.body
+            const usercheck = await User.findOne({ username })
 
             if (usercheck) {
                 return res.status(400).json({ message: 'User has been already created' })
@@ -32,7 +32,7 @@ class UserController {
 
             const hashPass = bcrypt.hashSync(password, 6)
             
-            const user = new User({ login, password: hashPass, root: "USER" })
+            const user = new User({ username, email, password: hashPass, root: "USER" })
 
             await user.save()
 
@@ -49,8 +49,8 @@ class UserController {
 
     async login(req, res) {
         try {
-            const { login, password } = req.body
-            const user = await User.findOne({ login })
+            const { username, password } = req.body
+            const user = await User.findOne({ username })
 
             if (user) {
                 const IsPassMatches = bcrypt.compare(password, user.password)
@@ -64,7 +64,7 @@ class UserController {
                 // return res.status(400).json({ message: 'User\'s password or login isn\'t correct' })
             }
 
-            const token = generateToken(user._id, user.login, user.root)
+            const token = generateToken(user._id, user.username, user.root)
             res.cookie('session_id', token)
             console.log(token)
 

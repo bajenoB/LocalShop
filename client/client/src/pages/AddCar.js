@@ -46,19 +46,19 @@ function AddCarApp() {
               <input type="number"   id="car-price" className="nigger"></input>
             
               <label className="form-label">Описание</label>
-              <input type="number"   id="car-desc" className="nigger"></input>
+              <input type="text"   id="car-desc" className="nigger"></input>
             
               <label className="form-label">Страна</label>
-              <input type="number"   id="car-country" className="nigger"></input>
+              <input type="text"   id="car-country" className="nigger"></input>
             
               <label className="form-label">Бренд</label>
-              <input type="number"   id="car-brand" className="nigger"></input>
+              <input type="text"   id="car-brand" className="nigger"></input>
             
               <label className="form-label">Год</label>
               <input type="number"   id="car-year" className="nigger"></input>
             
               <label className="form-label">Топливо</label>
-              <input type="number"   id="car-fuel" className="nigger"></input>
+              <input type="text"   id="car-fuel" className="nigger"></input>
             </div>
   
             

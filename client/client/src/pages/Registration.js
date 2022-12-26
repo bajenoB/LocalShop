@@ -9,26 +9,14 @@ function RegisterApp() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: document.getElementById("user-name").value,
-          surname: document.getElementById("user-surname").value,
-          patronymic: document.getElementById("user-patronymic").value,
           email: document.getElementById("user-email").value,
           password: document.getElementById("user-password").value,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          // if (data.isRegister) {
-          //   updateRegister(true);
-          // } else {
-          //   console.log(data.error.errors[0].msg);
-          //   ShowValidationMessage(
-          //     data.error.errors[0].param,
-          //     data.error.errors[0].msg
-          //   );
-          //   updateRegister(false);
-          // }
-          console.log(data);
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
     }
     return(
       <div className="page">

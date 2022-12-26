@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 
 
 
-const router = require('./routes/gavno')
+const {UserRouter} = require('./routes/userrout')
 const  {CarRouter}  = require('./routes/carrout')
 
 
@@ -19,7 +19,7 @@ const url="mongodb+srv://bajenob:Savelstan123@cluster0.hpu47xh.mongodb.net/test"
 const app=express()
 app.use(express.json());
 app.use(cors());
-app.use(router);
+
 
 
 
@@ -28,6 +28,7 @@ app.use(router);
 
 async function run() {
   CarRouter(app);
+  UserRouter(app);
   try {
     await mongoose.connect(url, {
         useNewUrlParser: true,
