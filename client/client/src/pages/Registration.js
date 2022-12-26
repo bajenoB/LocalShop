@@ -36,14 +36,14 @@ function RegisterApp() {
           <h1>Регистрация</h1>
           <div className="fields">
             <label className="form-label">Логин</label>
-            <input class="nigger" type="text" id="user-name"></input>
+            <input className="nigger" type="text" id="user-name"></input>
             <label className="form-label">Почта</label>
-            <input class="nigger" type="email" id="user-email"></input>
+            <input className="nigger" type="email" id="user-email"></input>
             <label className="form-label">Пароль</label>
-            <input class="nigger" type="password" id="user-password"></input>
+            <input className="nigger" type="password" id="user-password"></input>
           </div>
           {/* <Link class="link" to="/login" draggable="false"> */}
-          <button class="registerbtn" id="register-btn" onClick={Register}>
+          <button className="registerbtn" id="register-btn" onClick={Register}>
             Зарегаться
           </button>
           {/* </Link> */}

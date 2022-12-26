@@ -1,11 +1,37 @@
 const CarModel = require("../model/car");
 const express = require("express");
-const carRouter = express.Router();
 
-carRouter.post('/api/addcar',async(req,res)=>{
-    console.log("NU i Gavno");
 
-    
+const { check, validationResult } = require("express-validator");
+
+const validation = [
+  check("name")
+    .notEmpty()
+    .withMessage("Имя не может быть пусто!")
+    .isLength({
+      min: 2,
+      max: 30,
+    })
+    .withMessage("Ошибочная длинна"),
+
+  check("image").notEmpty().withMessage("Картинка не может быть пустой"),
+
+  check("price")
+    .notEmpty()
+    .withMessage("Цена не может быть пустой")
+    .isInt({ min: 0 })
+    .withMessage("Цена должна быть больше 0"),
+
+  check("year")
+    .notEmpty()
+    .withMessage("Год не может быть пуст")
+    .isInt({ min: 1900, max: 2023 })
+    .withMessage("Год должен быть между 1900 и 2023!"),
+];
+async function CarRouter(app){
+app.post('/api/addcar',async(req,res)=>{
+
+  
      let image=req.body.image;
      let name=req.body.name; 
      let price=req.body.price;
@@ -14,9 +40,6 @@ carRouter.post('/api/addcar',async(req,res)=>{
      let fuel=req.body.fuel;
      let Brand=req.body.Brand;
      let year=req.body.year;
-    
-    
-    
 
     const car=new CarModel({
         Brand:Brand,
@@ -33,18 +56,18 @@ carRouter.post('/api/addcar',async(req,res)=>{
     await car.save();
 })  
 
-carRouter.get("/api/getcar", async (req, res) => {
+app.get("/api/getcar", async (req, res) => {
     var carsArray = await Cars.Car.find({});
     res.json({ cars: carsArray });
   });
 
 
-carRouter.post("/api/delete", async (req, res) => {
+app.post("/api/delete", async (req, res) => {
     const { _id } = req.body;
     await Cars.Car.remove({ _id: _id });
     var carsArray = await Cars.Car.find({});
     res.json({ cars: carsArray });
   });
   
-  
-  module.exports = carRouter;
+}
+  module.exports = {CarRouter};

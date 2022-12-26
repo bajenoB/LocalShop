@@ -3,47 +3,97 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../model/user')
 
-const generateJwt = (id, email, role) => {
-    return jwt.sign(
-        { id, email, role },
-        process.env.SECRET_KEY,
-        { expiresIn: '24h' }
-    )
+const generateToken = (id, login, root) => {
+    const payload = {
+        id,
+        login,
+        root,
+    }
+
+    return jwt.sign(payload, jwtSecret, {expiresIn: "12h"})
 }
 
 class UserController {
-    async registration(req, res, next) {
-        const { email, password, role } = req.body
-        if (!email || !password) {
-            return next(ApiError.badRequest('Некорректный email или пароль'))
+    async reg(req, res) {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                res.status(400).json({ message: "Registration errors found", errors })
+            }
+
+            const { login, password } = req.body
+            const usercheck = await User.findOne({ login })
+
+            if (usercheck) {
+                return res.status(400).json({ message: 'User has been already created' })
+            }
+
+            
+
+            const hashPass = bcrypt.hashSync(password, 6)
+            
+            const user = new User({ login, password: hashPass, root: "USER" })
+
+            await user.save()
+
+            // return res.json({ message: "User has been successfully created" })
+
+            res.redirect('/')
+
+
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({ message: 'Registration error' })
         }
-        const candidate = await User.findOne({ where: { email } })
-        if (candidate) {
-            return next(ApiError.badRequest('Пользователь с таким email уже существует'))
-        }
-        const hashPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({ email, role, password: hashPassword })
-        const token = generateJwt(user.id, user.email, user.role)
-        return res.json({ token })
     }
 
-    async login(req, res, next) {
-        const { email, password } = req.body
-        const user = await User.findOne({ where: { email } })
-        if (!user) {
-            return next(ApiError.internal('Пользователь не найден'))
+    async login(req, res) {
+        try {
+            const { login, password } = req.body
+            const user = await User.findOne({ login })
+
+            if (user) {
+                const IsPassMatches = bcrypt.compare(password, user.password)
+                if (!IsPassMatches) {
+                    return res.redirect('/login')
+                    // return res.status(400).json({ message: 'User\'s password or login isn\'t correct' })
+                }
+            }
+            else {
+                return res.redirect('/login')
+                // return res.status(400).json({ message: 'User\'s password or login isn\'t correct' })
+            }
+
+            const token = generateToken(user._id, user.login, user.root)
+            res.cookie('session_id', token)
+            console.log(token)
+
+            return res.redirect('/')
+            // return res.json({token})
+        } catch (error) {
+            console.log(error)
+            return res.redirect('/login')
+            // res.status(400).json({ message: 'Login error' })
         }
-        let comparePassword = bcrypt.compareSync(password, user.password)
-        if (!comparePassword) {
-            return next(ApiError.internal('Указан неверный пароль'))
-        }
-        const token = generateJwt(user.id, user.email, user.role)
-        return res.json({token})
     }
 
-    async check(req, res, next) {
-       const token = generateJwt(req.user.id, req.user.email, req.user.role)
-       return res.json({token})
+    async logout(req, res) {
+        try {
+            res.clearCookie("session_id")
+            return res.redirect('/login')
+        } catch (error) {
+            return res.redirect('/profile')
+            // res.status(400).json({ message: 'Login error' })
+        }
+    }
+
+    async getUsers(req, res) {
+        try {
+            const users = await User.find().lean()
+            res.json(users)
+        } catch (error) {
+
+        }
     }
 }
 

@@ -45,15 +45,15 @@ function LoginApp() {
           <div className="fields">
 
             <label className="form-label">Почта</label>
-            <input type="text" class="nigger" id="userlog"></input>
+            <input type="text" className="nigger" id="userlog"></input>
 
             <label className="form-label">Пароль</label>
-            <input type="password" class="nigger" id="password-log"></input>
+            <input type="password" className="nigger" id="password-log"></input>
           </div>
   
           
           <Link className="link"  to="/register" draggable="false">
-            <button class="registerbtn" onClick={LogIn} id="reg-btn">ЗАРЕЄСТРУВАТИСЯ</button>
+            <button className="registerbtn" onClick={LogIn} id="reg-btn">ЗАРЕЄСТРУВАТИСЯ</button>
           </Link>
         </div>
       </div>
