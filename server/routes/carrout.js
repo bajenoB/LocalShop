@@ -56,10 +56,11 @@ app.post('/api/addcar',async(req,res)=>{
     await car.save();
 })  
 
-app.get("/api/getcar", async (req, res) => {
-    var carsArray = await Cars.Car.find({});
-    res.json({ cars: carsArray });
-  });
+app.get('/api/getcars',async (req, res) => {
+  const cars = await CarModel.find({}).lean();
+  console.log(`Request's been received for data fetch`);
+  res.json({cursor:cars})
+});
 
 
 app.post("/api/delete", async (req, res) => {
