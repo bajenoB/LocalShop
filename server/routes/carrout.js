@@ -39,6 +39,12 @@ app.get('/api/getcars',async (req, res) => {
   res.json({cursor:cars})
 });
 
+app.get('/:_id',async (req, res) => {
+  const cars = await CarModel.find({}).lean();
+  console.log(`Request's been received for data fetch`);
+  res.json({cursor:cars})
+});
+
 
 app.post("/api/delete", async (req, res) => {
     const { _id } = req.body;

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Register from "./pages/Registration";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
-import Addcar from "./pages/AddCar"
+import Addcar from "./pages/AddCar";
+import Product from "./pages/Product";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { createBrowserHistory } from "history";
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route  path="/register" element={<Register />}></Route>
             <Route  path="/addcar" element={<Addcar />}></Route>
+            <Route  path="/:_id" element={<Product />}></Route>
         </Routes>
       </Router>
   );

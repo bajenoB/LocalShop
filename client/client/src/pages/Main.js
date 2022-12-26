@@ -5,7 +5,7 @@ import React from "react";
 
 import pic from "./nigger.jpg";
 
-
+const url="http://localhost:3001/";
 
 
 function Main(props){
@@ -91,7 +91,7 @@ function Main(props){
         </div>
     <div className="main_products_cards">
         {car?.map((cursor) => {
-            return <div className="product-item">
+            return <div className="product-item" >
                 <img className="cardimg" src={cursor.image}></img>
                 <h4>имя {cursor.name}  </h4>
                 <h4>бренд {cursor.brand}  </h4>
@@ -100,6 +100,8 @@ function Main(props){
                 <h5>топливо {cursor.fuel}</h5>
                 <h5>цена{cursor.price}</h5>
                 <h5>год{cursor.year}</h5>
+                
+                <a href= {url+cursor._id} >Подробнее</a>
                 
                 
                 
