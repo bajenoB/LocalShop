@@ -1,4 +1,4 @@
-import "../css/Reg.css";
+import "./Registration.css";
 import React from "react";
 
 
@@ -33,21 +33,17 @@ function RegisterApp() {
     return(
       <div className="page">
         <div className="form">
-          <h1>Реєстрація</h1>
+          <h1>Регистрация</h1>
           <div className="fields">
-            <label className="form-label">Ім'я</label>
-            <input type="text" id="user-name"></input>
-            <label className="form-label">Прізвище</label>
-            <input type="text" id="user-surname"></input>
-            <label className="form-label">По батькові</label>
-            <input type="text" id="user-patronymic"></input>
-            <label className="form-label">Ел. пошта</label>
-            <input type="email" id="user-email"></input>
+            <label className="form-label">Логин</label>
+            <input class="nigger" type="text" id="user-name"></input>
+            <label className="form-label">Почта</label>
+            <input class="nigger" type="email" id="user-email"></input>
             <label className="form-label">Пароль</label>
-            <input type="password" id="user-password"></input>
+            <input class="nigger" type="password" id="user-password"></input>
           </div>
           {/* <Link class="link" to="/login" draggable="false"> */}
-          <button id="register-btn" onClick={Register}>
+          <button class="registerbtn" id="register-btn" onClick={Register}>
             Зарегаться
           </button>
           {/* </Link> */}

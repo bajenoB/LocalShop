@@ -1,57 +1,56 @@
 
-require('dotenv').config()
+
 const express= require('express')
 const cors = require('cors')
 
-const { MongoClient } = require("mongodb");
 
-const userRouter = require("./routes/userrout");
+const mongoose = require('mongoose')
 
-const car = require('./model/car');
-const user = require('./model/user')
+
+
+const car = require('./model/car')
 const router = require('./routes/gavno')
+const  CarRouter  = require('./routes/carrout')
+
 
 const PORT = process.env.PORT||3000
+
+const url="mongodb+srv://bajenob:Savelstan123@cluster0.hpu47xh.mongodb.net/test"
+
 const app=express()
-const url="mongodb+srv://bajenob:<Savelstan123>@cluster0.hpu47xh.mongodb.net/test"
-const client = new MongoClient(url);
-
-app.use(cors())
 app.use(express.json());
-app.use('/api',router);
-    
+app.use(cors());
+app.use(CarRouter);
+app.use(router);
+
+app.get('/', (req, res) => {
+  res.send(car);
+});
 
 
 
-
-
-
-async function run() {
-  try {
-    
-    await client.connect();
+mongoose.connect(url, function (err, db) {
+  if (!err) {
     console.log("Mongose connected");
+  } else console.log(err);
+});
 
-    
-    await client.db("Bajenob").command({ ping: 1 });
-    
-  } finally {
-    
-    await client.close();
-  }
-}
+app.listen(PORT, () => {
+  console.log("Server start");
+});
 
 
 
 
 
-const start = async () => {
-  try {
-      await run()
-      app.listen(PORT, () => console.log(`Server starter on ${PORT} port`))
-  } catch (e) {
-      console.log(e)
-  }
-}
-start()
+
+
+
+
+
+
+
+
+
+
 

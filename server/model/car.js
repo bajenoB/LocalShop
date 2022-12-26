@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
    
 const CarScheme = mongoose.Schema({
-    image: File,
+    image: String,
     name: String,
     price: Number,
     country: String,
@@ -13,4 +13,4 @@ const CarScheme = mongoose.Schema({
 });
  
 
-module.exports = mongoose.model("Car",CarSchema);
+module.exports = mongoose.model("Car",CarScheme);

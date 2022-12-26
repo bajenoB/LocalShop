@@ -1,6 +1,7 @@
+const ApiError = require('../error/AppError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { User } = require('../models/user')
+const { User } = require('../model/user')
 
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -9,7 +10,6 @@ const generateJwt = (id, email, role) => {
         { expiresIn: '24h' }
     )
 }
-
 
 class UserController {
     async registration(req, res, next) {

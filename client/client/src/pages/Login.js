@@ -1,4 +1,6 @@
-import "../css/Log.css";
+import "./Login.css";
+import { createBrowserHistory } from "history";
+import { Link } from "react-router-dom";
 import React from "react";
 
 function LoginApp() {
@@ -36,28 +38,22 @@ function LoginApp() {
         });
     }
     return (
-      <div className="page">
+      <div className="page" class="container">
         <div className="form">
           <h1>Вхід в особистий кабінет</h1>
-          <span id="info">
-            Для входу в кабінет введіть ел. пошту
-            <br />
-            та отримайте код авторизації.
-          </span>
+          
           <div className="fields">
-            <label>Почта</label>
-            <input type="text" id="userlog"></input>
+
+            <label className="form-label">Почта</label>
+            <input type="text" class="nigger" id="userlog"></input>
+
             <label className="form-label">Пароль</label>
-            <input type="password" id="password-log"></input>
+            <input type="password" class="nigger" id="password-log"></input>
           </div>
   
-          {/* <Link class="link" to="/" draggable="false"> */}
-          <button id="login-btn" onClick={LogIn}>
-            УВІЙТИ
-          </button>
-          {/* </Link> */}
-          <Link className="link" to="/register" draggable="false">
-            <button id="reg-btn">ЗАРЕЄСТРУВАТИСЯ</button>
+          
+          <Link className="link"  to="/register" draggable="false">
+            <button class="registerbtn" onClick={LogIn} id="reg-btn">ЗАРЕЄСТРУВАТИСЯ</button>
           </Link>
         </div>
       </div>
